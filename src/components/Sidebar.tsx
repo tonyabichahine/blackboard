@@ -37,11 +37,18 @@ export default function Sidebar({ studentName }: SidebarProps) {
         </div>
       </div>
 
-      {/* Student name */}
-      <div className="flex items-center gap-3 px-4 py-4 border-b border-gray-800">
+      {/* Student name — clickable */}
+      <Link
+        href="/dashboard/profile"
+        className="flex items-center gap-3 px-4 py-4 border-b border-gray-800 hover:bg-gray-800 transition-colors"
+        style={{
+          borderLeft: pathname === '/dashboard/profile' ? '3px solid #c026d3' : '3px solid transparent',
+          backgroundColor: pathname === '/dashboard/profile' ? '#2d2d2d' : 'transparent',
+        }}
+      >
         <PersonIcon />
         <span className="text-gray-300 text-sm truncate uppercase tracking-wide">{studentName}</span>
-      </div>
+      </Link>
 
       {/* Nav items */}
       <nav className="flex-1 py-2">
