@@ -87,7 +87,7 @@ export default function GradesPage() {
                   <span className="text-sm text-gray-700">New Total Calculation 6/3/26</span>
                 </div>
                 <span className="px-4 py-1.5 rounded-full text-sm font-semibold text-white" style={{ backgroundColor: '#22c55e' }}>
-                  85 / 100
+                  88 / 100
                 </span>
               </div>
             </div>
