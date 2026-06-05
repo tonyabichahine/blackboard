@@ -58,10 +58,10 @@ export default function ActivityPage() {
   const filtered = filter === 'all' ? items : items.filter(i => i.activity_type === filter)
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 overflow-x-hidden">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-8 py-5 flex items-center justify-between">
-        <h1 className="text-3xl font-light text-gray-800">Activity Stream</h1>
+      <div className="bg-white border-b border-gray-200 px-4 md:px-8 py-5 flex items-center justify-between">
+        <h1 className="text-xl md:text-3xl font-light text-gray-800">Activity Stream</h1>
         <button className="text-gray-500 hover:text-gray-700">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
             <circle cx="12" cy="12" r="3"/>
