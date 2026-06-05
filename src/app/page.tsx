@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -46,7 +47,7 @@ export default function LoginPage() {
         {/* NDU Logo */}
         <div className="flex flex-col items-center mb-10">
           <div className="mb-4">
-            <NduLogo />
+            <Image src="/ndu-logo.png" alt="NDU Logo" width={240} height={90} priority />
           </div>
           <p className="text-white text-2xl font-light tracking-widest">Blackboard</p>
         </div>
@@ -90,24 +91,5 @@ export default function LoginPage() {
       {/* Footer */}
       <p className="text-gray-500 text-xs pb-6">© 1997-2026 Blackboard Inc. All Rights Reserved.</p>
     </div>
-  )
-}
-
-function NduLogo() {
-  return (
-    <svg width="240" height="86" viewBox="0 0 240 86" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Left white panel */}
-      <rect x="0" y="0" width="78" height="80" rx="6" fill="white" />
-      {/* Bird silhouette (simple) */}
-      <path d="M20 55 C25 35 45 28 55 38 C48 32 35 34 30 50 Z" fill="#2b2b2b" />
-      <path d="M28 58 C22 48 18 38 25 30 C20 38 22 50 30 56 Z" fill="#2b2b2b" />
-      <path d="M38 62 L28 56 L32 48 L42 54 Z" fill="#2b2b2b" />
-      {/* Right dark panel */}
-      <rect x="82" y="0" width="158" height="80" rx="6" fill="#2d3748" />
-      {/* NDU text */}
-      <text x="95" y="50" fontSize="38" fontWeight="900" fill="white" fontFamily="Arial Black, Arial" letterSpacing="2">NDU</text>
-      {/* Tagline */}
-      <text x="88" y="68" fontSize="8.5" fill="#94a3b8" fontFamily="Arial" letterSpacing="2.5">GAUDIUM DE VERITATE</text>
-    </svg>
   )
 }
