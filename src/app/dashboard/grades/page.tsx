@@ -82,9 +82,6 @@ export default function GradesPage() {
               </div>
             </div>
 
-            <div className="px-6 py-3 border-t border-gray-100 text-right">
-              <button className="text-sm text-blue-600 hover:underline underline">View all work (16)</button>
-            </div>
           </div>
 
         </div>
