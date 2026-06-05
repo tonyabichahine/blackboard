@@ -1,38 +1,14 @@
 export default function GradesPage() {
   const courses = [
-    {
-      code: 'SP26-ENG105-A-NLC',
-      name: 'SP26-ENGLISH 105 - A-NLC',
-      color: '#06b6d4',
-      grade: '85',
-      letter: 'B',
-      letterColor: '#22c55e',
-      letterBg: '#dcfce7',
-    },
-    {
-      code: 'SP26-IDP222-223-226',
-      name: 'SP26-IDP 222-223-226',
-      color: '#7c3aed',
-      grade: '85',
-      letter: 'B',
-      letterColor: '#22c55e',
-      letterBg: '#dcfce7',
-    },
-    {
-      code: 'SP26-ARB238-NLC',
-      name: 'SP26-ARB 238 - HUMAN THOUGHT IN ARABIC LIT',
-      color: '#1d4ed8',
-      grade: '85',
-      letter: 'B',
-      letterColor: '#22c55e',
-      letterBg: '#dcfce7',
-    },
+    { code: 'SP26-ENG105-A-NLC',     name: 'SP26-ENGLISH 105 - A-NLC',                  color: '#06b6d4' },
+    { code: 'SP26-IDP222-223-226',   name: 'SP26-IDP 222-223-226',                       color: '#7c3aed' },
+    { code: 'SP26-ARB238-NLC',       name: 'SP26-ARB 238 - HUMAN THOUGHT IN ARABIC LIT', color: '#1d4ed8' },
   ]
 
   return (
     <div className="min-h-screen bg-gray-100">
 
-      {/* Header */}
+      {/* Page header */}
       <div className="bg-white border-b border-gray-200 px-8 py-5">
         <h1 className="text-3xl font-light text-gray-800">Grades</h1>
       </div>
@@ -50,8 +26,8 @@ export default function GradesPage() {
           {courses.map(course => (
             <div key={course.code} className="bg-white border border-gray-200 rounded overflow-hidden">
 
-              {/* Colored top border */}
-              <div className="h-1" style={{ backgroundColor: course.color }} />
+              {/* Thick colored top border */}
+              <div className="h-1.5" style={{ backgroundColor: course.color }} />
 
               {/* Card header */}
               <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
@@ -65,10 +41,9 @@ export default function GradesPage() {
                     <circle cx="12" cy="12" r="10"/>
                     <polyline points="12 6 12 12 16 14"/>
                   </svg>
-                  {/* Grade letter badge */}
-                  <span className="px-3 py-1 rounded-full text-sm font-semibold"
-                    style={{ backgroundColor: course.letterBg, color: course.letterColor }}>
-                    {course.letter}
+                  {/* B+ badge — amber, same style as D+ in screenshot */}
+                  <span className="px-3 py-1 rounded-full text-sm font-semibold text-white" style={{ backgroundColor: '#f59e0b' }}>
+                    B+
                   </span>
                 </div>
               </div>
@@ -79,38 +54,35 @@ export default function GradesPage() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     {/* Calculator icon */}
-                    <div className="w-10 h-10 border border-gray-300 rounded flex items-center justify-center">
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#555" strokeWidth="1.5">
+                    <div className="w-10 h-10 border border-gray-300 rounded flex items-center justify-center shrink-0">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#555" strokeWidth="1.5">
                         <rect x="4" y="2" width="16" height="20" rx="2"/>
                         <line x1="8" y1="6" x2="16" y2="6"/>
-                        <line x1="8" y1="10" x2="10" y2="10"/><line x1="9" y1="9" x2="9" y2="11"/>
-                        <line x1="14" y1="10" x2="16" y2="10"/>
-                        <line x1="8" y1="14" x2="10" y2="14"/>
-                        <line x1="14" y1="13" x2="16" y2="15"/><line x1="14" y1="15" x2="16" y2="13"/>
-                        <line x1="8" y1="18" x2="10" y2="18"/>
-                        <line x1="14" y1="18" x2="16" y2="18"/>
+                        <line x1="8" y1="11" x2="10" y2="11"/><line x1="9" y1="10" x2="9" y2="12"/>
+                        <line x1="14" y1="11" x2="16" y2="11"/>
+                        <line x1="8" y1="15" x2="10" y2="15"/>
+                        <line x1="14" y1="14" x2="16" y2="16"/><line x1="16" y1="14" x2="14" y2="16"/>
+                        <line x1="8" y1="19" x2="10" y2="19"/>
+                        <line x1="14" y1="19" x2="16" y2="19"/>
                       </svg>
                     </div>
                     <span className="text-sm text-gray-700">New Total Calculation 6/3/26</span>
                   </div>
-
-                  {/* Grade pill */}
-                  <span className="px-4 py-1.5 rounded-full text-sm font-semibold text-white"
-                    style={{ backgroundColor: '#22c55e' }}>
-                    {course.grade} / 100
+                  {/* Grade pill — amber like screenshot */}
+                  <span className="px-4 py-1.5 rounded-full text-sm font-semibold text-white" style={{ backgroundColor: '#f59e0b' }}>
+                    85 / 100
                   </span>
                 </div>
               </div>
 
               {/* View all work */}
               <div className="px-6 py-3 border-t border-gray-100 text-right">
-                <button className="text-sm text-blue-600 hover:underline">View all work (16)</button>
+                <button className="text-sm text-blue-600 hover:underline underline">View all work (16)</button>
               </div>
 
             </div>
           ))}
         </div>
-
       </div>
 
       {/* Help */}
