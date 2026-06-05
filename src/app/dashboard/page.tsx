@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 
 interface ActivityItem {
   id: string
@@ -13,10 +12,22 @@ interface ActivityItem {
   created_at: string
 }
 
+function gradeColor(score: number) {
+  if (score >= 87) return { bg: '#4ade80', text: '#14532d' }
+  if (score >= 75) return { bg: '#facc15', text: '#713f12' }
+  return { bg: '#f87171', text: '#7f1d1d' }
+}
+
+function formatDate(dateStr: string) {
+  const d = new Date(dateStr)
+  return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) +
+    ' ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
+}
+
 export default function ActivityPage() {
   const [items, setItems] = useState<ActivityItem[]>([])
   const [filter, setFilter] = useState('all')
-  const router = useRouter()
+  const [visibleGrades, setVisibleGrades] = useState<Set<string>>(new Set())
 
   useEffect(() => {
     fetch('/api/activity')
@@ -24,11 +35,15 @@ export default function ActivityPage() {
       .then(data => Array.isArray(data) && setItems(data))
   }, [])
 
-  const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleDateString('en-US', {
-      month: 'long', day: 'numeric', year: 'numeric'
+  function toggleGrade(id: string) {
+    setVisibleGrades(prev => {
+      const next = new Set(prev)
+      next.has(id) ? next.delete(id) : next.add(id)
+      return next
     })
   }
+
+  const filtered = filter === 'all' ? items : items.filter(i => i.activity_type === filter)
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -65,11 +80,11 @@ export default function ActivityPage() {
         </div>
 
         {/* Timeline */}
-        {items.length === 0 ? (
+        {filtered.length === 0 ? (
           <p className="text-gray-500 text-sm">No activity yet.</p>
         ) : (
           <div className="relative">
-            {/* Section label */}
+            {/* Recent label */}
             <div className="flex items-center gap-4 mb-6 ml-36">
               <div className="w-3 h-3 rounded-full border-2 border-gray-400 bg-gray-100" />
               <span className="text-2xl font-light text-gray-500">Recent</span>
@@ -78,44 +93,69 @@ export default function ActivityPage() {
             {/* Vertical line */}
             <div className="absolute left-[148px] top-10 bottom-0 w-px bg-gray-300" />
 
-            {/* Items */}
             <div className="space-y-6">
-              {items.map(item => (
-                <div key={item.id} className="flex items-start gap-4">
-                  {/* Date */}
-                  <div className="w-32 text-right">
-                    <span className="text-sm italic text-gray-400">{formatDate(item.created_at)}</span>
-                  </div>
+              {filtered.map(item => {
+                const score = item.grade_value ? parseInt(item.grade_value) : null
+                const colors = score !== null ? gradeColor(score) : null
+                const shown = visibleGrades.has(item.id)
 
-                  {/* Timeline dot */}
-                  <div className="flex-shrink-0 w-4 flex justify-center pt-3">
-                    <div className="w-2 h-2 rounded-full bg-gray-400 z-10 relative" />
-                  </div>
+                return (
+                  <div key={item.id} className="flex items-start gap-4">
+                    {/* Date */}
+                    <div className="w-32 text-right shrink-0">
+                      <span className="text-xs italic text-gray-400 leading-tight">
+                        {formatDate(item.created_at)}
+                      </span>
+                    </div>
 
-                  {/* Document icon */}
-                  <div className="flex-shrink-0 w-10 h-10 border border-gray-300 rounded flex items-center justify-center bg-white">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="1.5">
-                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                      <polyline points="14 2 14 8 20 8"/>
-                      <line x1="16" y1="13" x2="8" y2="13"/>
-                      <line x1="16" y1="17" x2="8" y2="17"/>
-                      <polyline points="10 9 9 9 8 9"/>
-                    </svg>
-                  </div>
+                    {/* Timeline dot */}
+                    <div className="shrink-0 w-4 flex justify-center pt-3">
+                      <div className="w-2 h-2 rounded-full bg-gray-400 z-10 relative" />
+                    </div>
 
-                  {/* Content */}
-                  <div className="flex-1 bg-white rounded p-0">
-                    <p className="font-semibold text-gray-800 text-sm">{item.course_name}</p>
-                    <p className="text-gray-500 text-sm mb-2">Grade posted: {item.description}</p>
-                    <button
-                      onClick={() => router.push('/dashboard/grades')}
-                      className="px-3 py-1.5 text-xs text-gray-600 bg-gray-200 hover:bg-gray-300 rounded transition-colors"
-                    >
-                      View my grade
-                    </button>
+                    {/* Document icon */}
+                    <div className="shrink-0 w-10 h-10 border border-gray-300 rounded flex items-center justify-center bg-white">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#555" strokeWidth="1.5">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <line x1="10" y1="9" x2="8" y2="9"/>
+                      </svg>
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 border-l-2 border-teal-400 pl-3 py-1">
+                      <p className="font-bold text-gray-800 text-sm">{item.course_name}</p>
+                      <p className="text-gray-500 text-sm mb-3">Grade posted: {item.description}</p>
+
+                      {shown && score !== null && colors ? (
+                        <div className="flex items-center gap-3">
+                          <span
+                            className="px-4 py-1.5 rounded-full text-sm font-semibold"
+                            style={{ backgroundColor: colors.bg, color: colors.text }}
+                          >
+                            {score} / 100
+                          </span>
+                          <button
+                            onClick={() => toggleGrade(item.id)}
+                            className="text-sm text-blue-500 hover:underline"
+                          >
+                            Hide
+                          </button>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={() => toggleGrade(item.id)}
+                          className="px-3 py-1.5 text-xs text-gray-600 bg-gray-200 hover:bg-gray-300 rounded transition-colors"
+                        >
+                          View my grade
+                        </button>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
         )}
