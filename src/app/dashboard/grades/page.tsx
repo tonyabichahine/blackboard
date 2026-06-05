@@ -61,7 +61,7 @@ export default function GradesPage() {
                   <circle cx="12" cy="12" r="10"/>
                   <polyline points="12 6 12 12 16 14"/>
                 </svg>
-                <span className="px-3 py-1 rounded-full text-sm font-semibold text-white" style={{ backgroundColor: '#f59e0b' }}>
+                <span className="px-3 py-1 rounded-full text-sm font-semibold text-white" style={{ backgroundColor: '#22c55e' }}>
                   B+
                 </span>
               </div>
@@ -86,7 +86,7 @@ export default function GradesPage() {
                   </div>
                   <span className="text-sm text-gray-700">New Total Calculation 6/3/26</span>
                 </div>
-                <span className="px-4 py-1.5 rounded-full text-sm font-semibold text-white" style={{ backgroundColor: '#f59e0b' }}>
+                <span className="px-4 py-1.5 rounded-full text-sm font-semibold text-white" style={{ backgroundColor: '#22c55e' }}>
                   85 / 100
                 </span>
               </div>
