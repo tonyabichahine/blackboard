@@ -22,7 +22,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
   return (
     <div className="flex min-h-screen">
       <Sidebar studentName={name} />
-      <main className="flex-1 md:ml-52 pt-12 md:pt-0 bg-gray-100 min-h-screen">
+      <main className="flex-1 md:ml-52 pt-12 md:pt-0 bg-gray-100 min-h-screen w-full overflow-x-hidden">
         {children}
       </main>
     </div>

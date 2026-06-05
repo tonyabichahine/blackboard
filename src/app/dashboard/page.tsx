@@ -58,33 +58,32 @@ export default function ActivityPage() {
   const filtered = filter === 'all' ? items : items.filter(i => i.activity_type === filter)
 
   return (
-    <div className="min-h-screen bg-gray-100 overflow-x-hidden">
+    <div className="min-h-screen bg-gray-100 w-full max-w-full overflow-x-hidden">
+
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-4 md:px-8 py-5 flex items-center justify-between">
-        <h1 className="text-xl md:text-3xl font-light text-gray-800">Activity Stream</h1>
-        <button className="text-gray-500 hover:text-gray-700">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <div className="bg-white border-b border-gray-200 px-4 md:px-8 py-4 flex items-center justify-between w-full">
+        <h1 className="text-lg md:text-3xl font-light text-gray-800 truncate">Activity Stream</h1>
+        <button className="text-gray-500 hover:text-gray-700 shrink-0 ml-3">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
             <circle cx="12" cy="12" r="3"/>
             <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
           </svg>
         </button>
       </div>
 
-      <div className="px-4 md:px-8 py-6">
+      <div className="px-4 md:px-8 py-6 w-full max-w-full">
+
         {/* Filter */}
-        <div className="mb-8">
-          <div className="relative inline-block">
+        <div className="mb-6">
+          <div className="relative inline-block w-full max-w-[200px]">
             <label className="absolute -top-2.5 left-3 bg-gray-100 px-1 text-xs text-gray-500">Filter</label>
-            <select
-              value={filter}
-              onChange={e => setFilter(e.target.value)}
-              className="border border-gray-400 rounded px-4 py-2.5 pr-10 text-sm text-gray-700 bg-gray-100 appearance-none focus:outline-none min-w-[180px]"
-            >
+            <select value={filter} onChange={e => setFilter(e.target.value)}
+              className="w-full border border-gray-400 rounded px-3 py-2.5 pr-8 text-sm text-gray-700 bg-gray-100 appearance-none focus:outline-none">
               <option value="all">Show All</option>
               <option value="grade_posted">Grades Only</option>
             </select>
-            <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2">
+            <div className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2">
                 <polyline points="6 9 12 15 18 9"/>
               </svg>
             </div>
@@ -95,57 +94,51 @@ export default function ActivityPage() {
         {filtered.length === 0 ? (
           <p className="text-gray-500 text-sm">No activity yet.</p>
         ) : (
-          <div className="relative">
+          <div className="w-full max-w-full">
+
             {/* Recent label */}
             <div className="flex items-center gap-3 mb-6 md:ml-36">
               <div className="w-3 h-3 rounded-full border-2 border-gray-400 bg-gray-100 shrink-0" />
-              <span className="text-2xl font-light text-gray-500">Recent</span>
+              <span className="text-xl md:text-2xl font-light text-gray-500">Recent</span>
             </div>
 
-            {/* Vertical line — desktop only */}
-            <div className="hidden md:block absolute left-[148px] top-10 bottom-0 w-px bg-gray-300" />
-
-            <div className="space-y-6">
+            <div className="space-y-5 w-full max-w-full">
               {filtered.map(item => {
                 const score = item.grade_value ? parseInt(item.grade_value) : null
                 const colors = score !== null ? gradeColor(score) : null
                 const shown = visibleGrades.has(item.id)
 
                 return (
-                  <div key={item.id} className="flex items-start gap-3">
+                  <div key={item.id} className="flex items-start gap-2 w-full max-w-full">
+
                     {/* Date — desktop only */}
                     <div className="hidden md:block w-32 text-right shrink-0">
-                      <span className="text-xs italic text-gray-400 leading-tight">
-                        {formatDate(item.created_at)}
-                      </span>
+                      <span className="text-xs italic text-gray-400">{formatDate(item.created_at)}</span>
                     </div>
-
                     {/* Timeline dot — desktop only */}
                     <div className="hidden md:flex shrink-0 w-4 justify-center pt-3">
-                      <div className="w-2 h-2 rounded-full bg-gray-400 z-10 relative" />
+                      <div className="w-2 h-2 rounded-full bg-gray-400" />
                     </div>
 
                     {/* Document icon */}
-                    <div className="shrink-0 w-10 h-10 border border-gray-300 rounded flex items-center justify-center bg-white">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#555" strokeWidth="1.5">
+                    <div className="shrink-0 w-9 h-9 border border-gray-300 rounded flex items-center justify-center bg-white">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" strokeWidth="1.5">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                         <polyline points="14 2 14 8 20 8"/>
                         <line x1="16" y1="13" x2="8" y2="13"/>
                         <line x1="16" y1="17" x2="8" y2="17"/>
-                        <line x1="10" y1="9" x2="8" y2="9"/>
                       </svg>
                     </div>
 
                     {/* Content */}
-                    <div className="flex-1 min-w-0 border-l-2 border-teal-400 pl-3 py-1">
-                      {/* Date — mobile only */}
-                      <p className="md:hidden text-xs italic text-gray-400 mb-1">{formatDate(item.created_at)}</p>
-                      <p className="font-bold text-gray-800 text-sm">{item.course_name}</p>
-                      <p className="text-gray-500 text-sm mb-3">Grade posted: {item.description}</p>
+                    <div className="flex-1 min-w-0 border-l-2 border-teal-400 pl-3 py-1 overflow-hidden">
+                      <p className="md:hidden text-xs italic text-gray-400 mb-1 truncate">{formatDate(item.created_at)}</p>
+                      <p className="font-bold text-gray-800 text-sm truncate">{item.course_name}</p>
+                      <p className="text-gray-500 text-sm mb-3 truncate">Grade posted: {item.description}</p>
 
                       {shown && score !== null && colors ? (
-                        <div className="flex items-center gap-3">
-                          <span className="px-4 py-1.5 rounded-full text-sm font-semibold"
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="px-3 py-1 rounded-full text-sm font-semibold whitespace-nowrap"
                             style={{ backgroundColor: colors.bg, color: colors.text }}>
                             {score} / 100
                           </span>
@@ -155,11 +148,12 @@ export default function ActivityPage() {
                         </div>
                       ) : (
                         <button onClick={() => toggleGrade(item.id)}
-                          className="px-3 py-1.5 text-xs text-gray-600 bg-gray-200 hover:bg-gray-300 rounded transition-colors">
+                          className="px-3 py-1.5 text-xs text-gray-600 bg-gray-200 hover:bg-gray-300 rounded transition-colors whitespace-nowrap">
                           View my grade
                         </button>
                       )}
                     </div>
+
                   </div>
                 )
               })}
@@ -168,11 +162,8 @@ export default function ActivityPage() {
         )}
       </div>
 
-      {/* Help button */}
       <div className="fixed bottom-6 right-6">
-        <button className="w-9 h-9 rounded-full border-2 border-gray-400 flex items-center justify-center text-gray-500 hover:border-gray-600 text-sm font-semibold">
-          ?
-        </button>
+        <button className="w-9 h-9 rounded-full border-2 border-gray-400 flex items-center justify-center text-gray-500 text-sm font-semibold">?</button>
       </div>
     </div>
   )
