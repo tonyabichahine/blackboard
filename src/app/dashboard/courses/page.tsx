@@ -42,6 +42,12 @@ export default function CoursesPage() {
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list')
   const [starred, setStarred] = useState<Set<number>>(new Set())
   const [expanded, setExpanded] = useState<Set<number>>(new Set())
+  const [toast, setToast] = useState(false)
+
+  function showToast() {
+    setToast(true)
+    setTimeout(() => setToast(false), 3000)
+  }
 
   const filtered = ALL_COURSES.filter(c => {
     const matchSearch = c.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -60,6 +66,14 @@ export default function CoursesPage() {
 
   return (
     <div className="min-h-screen bg-gray-100">
+
+      {/* Toast notification */}
+      {toast && (
+        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-gray-900 text-white text-sm px-6 py-3 rounded-lg shadow-xl flex items-center gap-3 animate-fade-in">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f87171" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Cannot open previous semester courses
+        </div>
+      )}
 
       {/* Header */}
       <div className="bg-white border-b border-gray-200 px-8 py-5">
@@ -154,7 +168,7 @@ export default function CoursesPage() {
                     {/* Content */}
                     <div className="flex-1 px-5 py-4">
                       <p className="text-xs text-gray-500 mb-1">{course.code}</p>
-                      <p className="font-bold text-gray-800 text-sm mb-1">{course.name}</p>
+                      <p onClick={showToast} className="font-bold text-gray-800 text-sm mb-1 cursor-pointer hover:text-blue-600 hover:underline">{course.name}</p>
                       <div className="flex items-center gap-1 text-sm text-gray-600">
                         <span>{course.status}</span>
                         <span className="text-gray-400">|</span>
@@ -193,7 +207,7 @@ export default function CoursesPage() {
             <h2 className="text-base font-normal text-gray-700 mb-3">Others</h2>
             <div className="grid grid-cols-3 gap-4">
               {filtered.map(course => (
-                <div key={course.id} className="bg-white border border-gray-200 rounded overflow-hidden hover:shadow-md transition-shadow">
+                <div key={course.id} onClick={showToast} className="bg-white border border-gray-200 rounded overflow-hidden hover:shadow-md transition-shadow cursor-pointer">
                   <div className="h-2" style={{ backgroundColor: course.color }} />
                   <div className="p-4">
                     <div className="flex justify-between items-start mb-2">
