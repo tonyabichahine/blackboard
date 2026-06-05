@@ -72,18 +72,8 @@ export default function GradesPage() {
               <p className="text-sm font-medium text-gray-700 mb-3">Recent Grades</p>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 border border-gray-300 rounded flex items-center justify-center shrink-0">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#555" strokeWidth="1.5">
-                      <rect x="4" y="2" width="16" height="20" rx="2"/>
-                      <line x1="8" y1="6" x2="16" y2="6"/>
-                      <line x1="8" y1="11" x2="10" y2="11"/><line x1="9" y1="10" x2="9" y2="12"/>
-                      <line x1="14" y1="11" x2="16" y2="11"/>
-                      <line x1="8" y1="15" x2="10" y2="15"/>
-                      <line x1="14" y1="14" x2="16" y2="16"/><line x1="16" y1="14" x2="14" y2="16"/>
-                      <line x1="8" y1="19" x2="10" y2="19"/>
-                      <line x1="14" y1="19" x2="16" y2="19"/>
-                    </svg>
-                  </div>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/calc-icon.png" alt="calculator" className="w-10 h-10 object-contain" />
                   <span className="text-sm text-gray-700">New Total Calculation 6/3/26</span>
                 </div>
                 <span className="px-4 py-1.5 rounded-full text-sm font-semibold text-white" style={{ backgroundColor: '#22c55e' }}>
