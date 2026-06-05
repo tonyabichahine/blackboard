@@ -42,9 +42,19 @@ export default function GradesPage() {
           <div className="bg-white border border-gray-200 rounded overflow-hidden">
             <div className="h-1.5" style={{ backgroundColor: '#06b6d4' }} />
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-              <div>
-                <p className="text-xs text-gray-500 mb-1">SP26-ENL002A-NLC</p>
-                <p className="text-lg font-semibold text-gray-800">SP26-INTENSIVE ENGLISH II - A-NLC</p>
+              <div className="space-y-2">
+                <div>
+                  <p className="text-xs text-gray-500">SP26-ENL105A-NLC</p>
+                  <p className="text-base font-semibold text-gray-800">SP26-ENGLISH 105 - A-NLC</p>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500">SP26-IDP222-223-226</p>
+                  <p className="text-base font-semibold text-gray-800">SP26-IDP 222-223-226</p>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500">SP26-ARB238A-NLC</p>
+                  <p className="text-base font-semibold text-gray-800">SP26-ARB 238 - HUMAN THOUGHT IN ARABIC LIT</p>
+                </div>
               </div>
               <div className="flex items-center gap-3">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="1.5">
