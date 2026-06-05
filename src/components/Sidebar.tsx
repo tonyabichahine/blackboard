@@ -85,14 +85,16 @@ export default function Sidebar({ studentName }: SidebarProps) {
   return (
     <>
       {/* Mobile hamburger bar */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-20 flex items-center justify-between px-4 py-3 border-b border-gray-800" style={{ backgroundColor: '#1a1a1a' }}>
-        <button onClick={() => setMobileOpen(true)} className="text-gray-300">
+      <div className="md:hidden fixed top-0 left-0 right-0 z-20 flex items-center px-4 py-3 border-b border-gray-800" style={{ backgroundColor: '#1a1a1a' }}>
+        <button onClick={() => setMobileOpen(true)} className="text-gray-300 shrink-0">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
           </svg>
         </button>
-        <BlackboardLogo />
-        <div className="w-6" />
+        <div className="flex-1 flex justify-center">
+          <BlackboardLogo />
+        </div>
+        <div className="w-6 shrink-0" />
       </div>
 
       {/* Mobile overlay */}
