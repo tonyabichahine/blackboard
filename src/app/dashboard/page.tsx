@@ -70,7 +70,7 @@ export default function ActivityPage() {
         </button>
       </div>
 
-      <div className="px-8 py-6">
+      <div className="px-4 md:px-8 py-6">
         {/* Filter */}
         <div className="mb-8">
           <div className="relative inline-block">
@@ -97,13 +97,13 @@ export default function ActivityPage() {
         ) : (
           <div className="relative">
             {/* Recent label */}
-            <div className="flex items-center gap-4 mb-6 ml-36">
-              <div className="w-3 h-3 rounded-full border-2 border-gray-400 bg-gray-100" />
+            <div className="flex items-center gap-3 mb-6 md:ml-36">
+              <div className="w-3 h-3 rounded-full border-2 border-gray-400 bg-gray-100 shrink-0" />
               <span className="text-2xl font-light text-gray-500">Recent</span>
             </div>
 
-            {/* Vertical line */}
-            <div className="absolute left-[148px] top-10 bottom-0 w-px bg-gray-300" />
+            {/* Vertical line — desktop only */}
+            <div className="hidden md:block absolute left-[148px] top-10 bottom-0 w-px bg-gray-300" />
 
             <div className="space-y-6">
               {filtered.map(item => {
@@ -112,16 +112,16 @@ export default function ActivityPage() {
                 const shown = visibleGrades.has(item.id)
 
                 return (
-                  <div key={item.id} className="flex items-start gap-4">
-                    {/* Date */}
-                    <div className="w-32 text-right shrink-0">
+                  <div key={item.id} className="flex items-start gap-3">
+                    {/* Date — desktop only */}
+                    <div className="hidden md:block w-32 text-right shrink-0">
                       <span className="text-xs italic text-gray-400 leading-tight">
                         {formatDate(item.created_at)}
                       </span>
                     </div>
 
-                    {/* Timeline dot */}
-                    <div className="shrink-0 w-4 flex justify-center pt-3">
+                    {/* Timeline dot — desktop only */}
+                    <div className="hidden md:flex shrink-0 w-4 justify-center pt-3">
                       <div className="w-2 h-2 rounded-full bg-gray-400 z-10 relative" />
                     </div>
 
@@ -137,30 +137,25 @@ export default function ActivityPage() {
                     </div>
 
                     {/* Content */}
-                    <div className="flex-1 border-l-2 border-teal-400 pl-3 py-1">
+                    <div className="flex-1 min-w-0 border-l-2 border-teal-400 pl-3 py-1">
+                      {/* Date — mobile only */}
+                      <p className="md:hidden text-xs italic text-gray-400 mb-1">{formatDate(item.created_at)}</p>
                       <p className="font-bold text-gray-800 text-sm">{item.course_name}</p>
                       <p className="text-gray-500 text-sm mb-3">Grade posted: {item.description}</p>
 
                       {shown && score !== null && colors ? (
                         <div className="flex items-center gap-3">
-                          <span
-                            className="px-4 py-1.5 rounded-full text-sm font-semibold"
-                            style={{ backgroundColor: colors.bg, color: colors.text }}
-                          >
+                          <span className="px-4 py-1.5 rounded-full text-sm font-semibold"
+                            style={{ backgroundColor: colors.bg, color: colors.text }}>
                             {score} / 100
                           </span>
-                          <button
-                            onClick={() => toggleGrade(item.id)}
-                            className="text-sm text-blue-500 hover:underline"
-                          >
+                          <button onClick={() => toggleGrade(item.id)} className="text-sm text-blue-500 hover:underline">
                             Hide
                           </button>
                         </div>
                       ) : (
-                        <button
-                          onClick={() => toggleGrade(item.id)}
-                          className="px-3 py-1.5 text-xs text-gray-600 bg-gray-200 hover:bg-gray-300 rounded transition-colors"
-                        >
+                        <button onClick={() => toggleGrade(item.id)}
+                          className="px-3 py-1.5 text-xs text-gray-600 bg-gray-200 hover:bg-gray-300 rounded transition-colors">
                           View my grade
                         </button>
                       )}
