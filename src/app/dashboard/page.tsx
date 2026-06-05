@@ -13,8 +13,8 @@ interface ActivityItem {
 }
 
 function gradeColor(score: number) {
-  if (score >= 87) return { bg: '#4ade80', text: '#14532d' }
-  if (score >= 75) return { bg: '#facc15', text: '#713f12' }
+  if (score >= 85) return { bg: '#4ade80', text: '#14532d' }
+  if (score >= 70) return { bg: '#facc15', text: '#713f12' }
   return { bg: '#f87171', text: '#7f1d1d' }
 }
 
@@ -32,7 +32,19 @@ export default function ActivityPage() {
   useEffect(() => {
     fetch('/api/activity')
       .then(r => r.json())
-      .then(data => Array.isArray(data) && setItems(data))
+      .then(data => {
+        if (!Array.isArray(data)) return
+        // Sort: ascending by calendar day, descending by time within same day
+        data.sort((a: ActivityItem, b: ActivityItem) => {
+          const da = new Date(a.created_at)
+          const db = new Date(b.created_at)
+          const dayA = Math.floor(da.getTime() / 86400000)
+          const dayB = Math.floor(db.getTime() / 86400000)
+          if (dayA !== dayB) return dayA - dayB
+          return db.getTime() - da.getTime()
+        })
+        setItems(data)
+      })
   }, [])
 
   function toggleGrade(id: string) {
