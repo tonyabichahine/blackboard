@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { useState } from 'react'
 
 interface SidebarProps {
   studentName: string
@@ -19,6 +20,7 @@ const navItems = [
 export default function Sidebar({ studentName }: SidebarProps) {
   const pathname = usePathname()
   const router = useRouter()
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   async function handleSignOut() {
     await fetch('/api/auth/logout', { method: 'POST' })
@@ -28,24 +30,26 @@ export default function Sidebar({ studentName }: SidebarProps) {
   const isActive = (href: string) =>
     href === '/dashboard' ? pathname === '/dashboard' : pathname.startsWith(href)
 
-  return (
-    <aside className="w-52 min-h-screen flex flex-col fixed top-0 left-0 z-10" style={{ backgroundColor: '#1a1a1a' }}>
+  const sidebarContent = (
+    <>
       {/* Logo */}
-      <div className="px-4 py-4 border-b border-gray-800">
-        <div className="flex items-center gap-2">
-          <BlackboardLogo />
-        </div>
+      <div className="px-4 py-4 border-b border-gray-800 flex items-center justify-between">
+        <BlackboardLogo />
+        {/* Close button on mobile */}
+        <button className="md:hidden text-gray-400" onClick={() => setMobileOpen(false)}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
       </div>
 
-      {/* Student name — clickable */}
-      <Link
-        href="/dashboard/profile"
+      {/* Student name */}
+      <Link href="/dashboard/profile" onClick={() => setMobileOpen(false)}
         className="flex items-center gap-3 px-4 py-4 border-b border-gray-800 hover:bg-gray-800 transition-colors"
         style={{
           borderLeft: pathname === '/dashboard/profile' ? '3px solid #c026d3' : '3px solid transparent',
           backgroundColor: pathname === '/dashboard/profile' ? '#2d2d2d' : 'transparent',
-        }}
-      >
+        }}>
         <PersonIcon />
         <span className="text-gray-300 text-sm truncate uppercase tracking-wide">{studentName}</span>
       </Link>
@@ -53,16 +57,13 @@ export default function Sidebar({ studentName }: SidebarProps) {
       {/* Nav items */}
       <nav className="flex-1 py-2">
         {navItems.map(({ label, href, icon: Icon }) => (
-          <Link
-            key={href}
-            href={href}
+          <Link key={href} href={href} onClick={() => setMobileOpen(false)}
             className="flex items-center gap-3 px-5 py-3 text-sm transition-colors"
             style={{
               color: isActive(href) ? '#fff' : '#aaa',
               backgroundColor: isActive(href) ? '#2d2d2d' : 'transparent',
               borderLeft: isActive(href) ? '3px solid #c026d3' : '3px solid transparent',
-            }}
-          >
+            }}>
             <Icon active={isActive(href)} />
             <span>{label}</span>
           </Link>
@@ -71,20 +72,50 @@ export default function Sidebar({ studentName }: SidebarProps) {
 
       {/* Bottom */}
       <div className="border-t border-gray-800 pb-4">
-        <button
-          onClick={handleSignOut}
-          className="flex items-center gap-3 px-5 py-4 text-sm text-gray-400 hover:text-white w-full transition-colors"
-        >
+        <button onClick={handleSignOut}
+          className="flex items-center gap-3 px-5 py-4 text-sm text-gray-400 hover:text-white w-full transition-colors">
           <SignOutIcon />
           <span>Sign Out</span>
         </button>
-        <p className="px-4 text-xs text-gray-600">
-          Privacy • Terms • Accessibility
-        </p>
+        <p className="px-4 text-xs text-gray-600">Privacy • Terms • Accessibility</p>
       </div>
-    </aside>
+    </>
+  )
+
+  return (
+    <>
+      {/* Mobile hamburger bar */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-20 flex items-center justify-between px-4 py-3 border-b border-gray-800" style={{ backgroundColor: '#1a1a1a' }}>
+        <button onClick={() => setMobileOpen(true)} className="text-gray-300">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+        <BlackboardLogo />
+        <div className="w-6" />
+      </div>
+
+      {/* Mobile overlay */}
+      {mobileOpen && (
+        <div className="md:hidden fixed inset-0 bg-black/50 z-30" onClick={() => setMobileOpen(false)} />
+      )}
+
+      {/* Mobile sidebar drawer */}
+      <aside
+        className={`md:hidden fixed top-0 left-0 h-full w-64 flex flex-col z-40 transition-transform duration-300 ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        style={{ backgroundColor: '#1a1a1a' }}>
+        {sidebarContent}
+      </aside>
+
+      {/* Desktop sidebar */}
+      <aside className="hidden md:flex w-52 min-h-screen flex-col fixed top-0 left-0 z-10" style={{ backgroundColor: '#1a1a1a' }}>
+        {sidebarContent}
+      </aside>
+    </>
   )
 }
+
+/* ── Update dashboard layout to add top padding on mobile ── */
 
 function BlackboardLogo() {
   return (

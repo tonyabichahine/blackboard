@@ -38,22 +38,22 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-between" style={{ backgroundColor: '#2b2b2b' }}>
+    <div className="flex flex-col items-center justify-between overflow-hidden" style={{ backgroundColor: '#2b2b2b', height: '100dvh' }}>
       {/* Gold top border */}
-      <div className="w-full h-1" style={{ backgroundColor: '#b89a4e' }} />
+      <div className="w-full h-1 shrink-0" style={{ backgroundColor: '#b89a4e' }} />
 
       {/* Center content */}
-      <div className="flex-1 flex flex-col items-center justify-center w-full">
+      <div className="flex-1 flex flex-col items-center justify-center w-full px-6">
         {/* NDU Logo */}
-        <div className="flex flex-col items-center mb-10">
-          <div className="mb-4">
-            <Image src="/ndu-logo.png" alt="NDU Logo" width={240} height={90} priority />
+        <div className="flex flex-col items-center mb-8">
+          <div className="mb-3">
+            <Image src="/ndu-logo.png" alt="NDU Logo" width={220} height={82} priority className="max-w-[70vw] h-auto" />
           </div>
           <p className="text-white text-2xl font-light tracking-widest">Blackboard</p>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="flex flex-col gap-8 w-80">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6 w-full max-w-xs">
           <div className="flex flex-col gap-1">
             <label className="text-white text-sm font-semibold">Username</label>
             <input
@@ -89,7 +89,7 @@ export default function LoginPage() {
       </div>
 
       {/* Footer */}
-      <p className="text-gray-500 text-xs pb-6">© 1997-2026 Blackboard Inc. All Rights Reserved.</p>
+      <p className="text-gray-500 text-xs pb-5 shrink-0">© 1997-2026 Blackboard Inc. All Rights Reserved.</p>
     </div>
   )
 }
