@@ -76,7 +76,7 @@ export default function ProfilePage() {
     : 'Anyone on the platform can view my profile information'
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 overflow-x-hidden">
 
       {/* Overlay */}
       {drawer && <div className="fixed inset-0 bg-black/40 z-20" onClick={() => setDrawer(null)} />}
@@ -259,10 +259,10 @@ export default function ProfilePage() {
         <p className="text-gray-500 text-sm mt-1">pckobrosly</p>
       </div>
 
-      <div className="flex gap-6 px-8 py-6 items-start">
+      <div className="flex flex-col md:flex-row gap-6 px-4 md:px-8 py-6 items-start">
 
         {/* Left column */}
-        <div className="flex-1 space-y-6">
+        <div className="w-full md:flex-1 space-y-6">
 
           <Section title="Basic Information">
             <Row label="Full Name"><span className="underline text-gray-800 text-sm">PAMELA KOBROSLY</span></Row>
@@ -320,10 +320,10 @@ export default function ProfilePage() {
         </div>
 
         {/* Right column */}
-        <div className="w-96 shrink-0">
+        <div className="w-full md:w-96 md:shrink-0">
           <Section title="System Settings">
-            <div className="flex items-start px-5 py-4 border-b border-gray-200">
-              <span className="w-52 shrink-0 font-semibold text-gray-700 text-sm">Language</span>
+            <div className="flex flex-col sm:flex-row sm:items-start px-5 py-4 border-b border-gray-200 gap-1">
+              <span className="sm:w-44 sm:shrink-0 font-semibold text-gray-700 text-sm">Language</span>
               <div className="flex-1 flex items-start justify-between gap-2">
                 <button onClick={() => open('language')} className="text-sm text-blue-600 hover:underline text-left">{languageLabel}</button>
                 <button onClick={() => open('language')} className="text-gray-400 hover:text-gray-600 shrink-0 mt-0.5">
@@ -331,12 +331,12 @@ export default function ProfilePage() {
                 </button>
               </div>
             </div>
-            <div className="flex items-start px-5 py-4 border-b border-gray-200">
-              <span className="w-52 shrink-0 font-semibold text-gray-700 text-sm">Privacy Settings</span>
+            <div className="flex flex-col sm:flex-row sm:items-start px-5 py-4 border-b border-gray-200 gap-1">
+              <span className="sm:w-44 sm:shrink-0 font-semibold text-gray-700 text-sm">Privacy Settings</span>
               <button onClick={() => open('privacy')} className="text-sm text-blue-600 hover:underline text-left">{privacyLabel}</button>
             </div>
-            <div className="flex items-start px-5 py-4">
-              <span className="w-52 shrink-0 font-semibold text-gray-700 text-sm">Global Notification Settings</span>
+            <div className="flex flex-col sm:flex-row sm:items-start px-5 py-4 gap-1">
+              <span className="sm:w-44 sm:shrink-0 font-semibold text-gray-700 text-sm">Global Notification Settings</span>
               <div className="flex flex-col gap-1 text-sm">
                 <BlueLink>Stream notifications</BlueLink>
                 <BlueLink>Email notifications</BlueLink>
@@ -362,9 +362,12 @@ function Drawer({ open, title, onClose, onSave, children }: {
   open: boolean; title: string; onClose: () => void; onSave: () => void; children: React.ReactNode
 }) {
   return (
-    <div className={`fixed top-0 right-0 h-full w-96 bg-white shadow-2xl z-30 flex flex-col transition-transform duration-300 ${open ? 'translate-x-0' : 'translate-x-full'}`}>
-      <button onClick={onClose} className="absolute -left-10 top-10 w-10 h-10 flex items-center justify-center text-white font-bold text-lg z-40" style={{ backgroundColor: '#a855f7' }}>✕</button>
-      <div className="px-6 pt-6 pb-4 border-b border-gray-200">
+    <div className={`fixed top-0 right-0 h-full w-full sm:w-96 bg-white shadow-2xl z-30 flex flex-col transition-transform duration-300 ${open ? 'translate-x-0' : 'translate-x-full'}`}>
+      {/* Close button — inside on mobile, outside on desktop */}
+      <button onClick={onClose}
+        className="absolute left-4 sm:-left-10 top-4 sm:top-10 w-10 h-10 flex items-center justify-center text-white font-bold text-lg z-40 rounded sm:rounded-none"
+        style={{ backgroundColor: '#a855f7' }}>✕</button>
+      <div className="px-6 pt-16 sm:pt-6 pb-4 border-b border-gray-200">
         <p className="text-xs text-gray-500 mb-1">Profile Settings</p>
         <h2 className="text-2xl font-light text-gray-800">{title}</h2>
       </div>
@@ -392,8 +395,8 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 function Row({ label, children, last }: { label: string; children: React.ReactNode; last?: boolean }) {
   return (
-    <div className="flex items-start px-5 py-4">
-      <span className="w-52 shrink-0 font-semibold text-gray-700 text-sm">{label}</span>
+    <div className="flex flex-col sm:flex-row sm:items-start px-4 sm:px-5 py-3 sm:py-4 gap-1">
+      <span className="sm:w-44 sm:shrink-0 font-semibold text-gray-700 text-sm">{label}</span>
       <div className="text-sm">{children}</div>
     </div>
   )
