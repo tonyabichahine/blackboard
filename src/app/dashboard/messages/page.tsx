@@ -9,7 +9,7 @@ const MESSAGE = {
   email: 'ndustudentaffair@gmail.com',
   subject: 'Financial Aid Grant — Award Notification SP26',
   preview: 'Dear Pamela Kobrosly, We are pleased to inform you that following a thorough review...',
-  date: 'Jun 3, 2026',
+  date: 'Jun 8, 2026',
   read: false,
 }
 
@@ -116,7 +116,7 @@ export default function MessagesPage() {
                 </div>
                 <div className="flex gap-2">
                   <span className="font-semibold w-10 shrink-0">Date:</span>
-                  <span>June 3, 2026 — 10:45 AM</span>
+                  <span>June 8, 2026 — 9:00 AM</span>
                 </div>
                 <div className="flex gap-2">
                   <span className="font-semibold w-10 shrink-0">Re:</span>
@@ -160,11 +160,11 @@ export default function MessagesPage() {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-500">Academic Year</span>
-                      <span className="font-semibold text-gray-800">2025–2026</span>
+                      <span className="font-semibold text-gray-800">2026–2027</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-500">Semester</span>
-                      <span className="font-semibold text-gray-800">Spring 2026</span>
+                      <span className="font-semibold text-gray-800">Fall 2026</span>
                     </div>
                     <div className="flex justify-between border-t border-gray-200 pt-2 mt-2">
                       <span className="text-gray-500 font-semibold">Financial Aid Grant</span>
@@ -175,7 +175,7 @@ export default function MessagesPage() {
 
                 <p>
                   Please note that this grant will be <strong>automatically applied to your tuition account</strong> within
-                  5–7 business days from the date of this notification. No further action is required on your part at this time.
+                  5–7 business days from the date of this notification. <strong>Action Required:</strong> Please email the financial aid department for the missing documents required to finalize your award.
                 </p>
 
                 <p>
